@@ -29,6 +29,24 @@ disregard small sequences, whose correlation is likely much higher due to the
 lack of sufficient data.
 
 
+#### `T mean(U<T> a, int n)`
+
+Calculates the mean of all n elements in the sequence a. The return type is the
+same type as the elements within the container U. The sequence does not need
+to be ordered. Addition must be defined for the type T. The mean is determined
+by the sum of all elements divided by n.
+
+
+#### `T standard_deviation(U<T> a, int n)`
+
+Calculates the standard deviation in the sequence a of n elements. The return
+type is the same type as the elements within the container U. The sequence does
+not need to be ordered. Addition, multiplication, and integer division must be
+defined for the type T. Standard deviation is calculated by the square of the
+variance. Variance is determined by the sum of the square of the difference
+between the ith element of sequence A and the mean of A, all divided by n - 1.
+
+
 #### `float correlation_coefficient(T a, T b, int n)`
 
 Calculates the correlation coefficient between the two sequences, a and b. Both
@@ -38,6 +56,12 @@ in each container. The sequences a and b must be of the same size. The return
 type is a signed floating point number between -1.0 and +1.0. A -1 value
 indicates a strong reverse correlation, 0 indicates no correlation, and +1
 indicates a strong positive correlation.
+
+The correlation coefficient between two sequences A and B of length n is
+calculated by subtracting (n * mean(A) * mean(B)) from the sum of the cross
+product of all respective elements a.1 and b.1 up to a.n and b.n, all divided
+by (n * standard_deviation(A) * standard_deviation(B)). It should be noted that
+correlation does not imply causality.
 
 
 ### Dependencies
