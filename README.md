@@ -29,7 +29,12 @@ disregard small sequences, whose correlation is likely much higher due to the
 lack of sufficient data.
 
 
-#### `T mean(U<T> a, int n)`
+#### sum
+
+Blah blah blah.
+
+
+#### mean
 
 Calculates the mean of all n elements in the sequence a. The return type is the
 same type as the elements within the container U. The sequence does not need
@@ -37,7 +42,12 @@ to be ordered. Addition must be defined for the type T. The mean is determined
 by the sum of all elements divided by n.
 
 
-#### `T standard_deviation(U<T> a, int n)`
+### variance
+
+Blah blah blah.
+
+
+#### standard deviation
 
 Calculates the standard deviation in the sequence a of n elements. The return
 type is the same type as the elements within the container U. The sequence does
@@ -47,7 +57,7 @@ variance. Variance is determined by the sum of the square of the difference
 between the ith element of sequence A and the mean of A, all divided by n - 1.
 
 
-#### `float correlation_coefficient(T a, T b, int n)`
+#### correlation_coefficient
 
 Calculates the correlation coefficient between the two sequences, a and b. Both
 a and b must be the same type: containers which are each partially ordered and
