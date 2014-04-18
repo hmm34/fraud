@@ -36,6 +36,10 @@ macro(add_unit_test mod file)
 endmacro()
 
 # Add a test suite.
+add_unit_test(fraud sum)
+add_unit_test(fraud mean)
+add_unit_test(fraud variance)
+add_unit_test(fraud standard_deviation)
 add_unit_test(fraud correlation_coefficient)
 
 
@@ -75,5 +79,9 @@ make_manifest(
   README.md
   fraud.hpp
   fraud.cpp
+  fraud.test/sum.cpp
+  fraud.test/mean.cpp
+  fraud.test/variance.cpp
+  fraud.test/standard_deviation.cpp
   fraud.test/correlation_coefficient.cpp
 )
