@@ -41,6 +41,7 @@ add_unit_test(fraud mean)
 add_unit_test(fraud variance)
 add_unit_test(fraud standard_deviation)
 add_unit_test(fraud correlation_coefficient)
+add_unit_test(fraud strongest_correlation)
 
 
 # ---------------------------------------------------------------------------- #
@@ -84,4 +85,5 @@ make_manifest(
   fraud.test/variance.cpp
   fraud.test/standard_deviation.cpp
   fraud.test/correlation_coefficient.cpp
+  fraud.test/strongest_correlation.cpp
 )

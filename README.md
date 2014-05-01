@@ -29,6 +29,8 @@ disregard small sequences, whose correlation is likely much higher due to the
 lack of sufficient data.
 
 
+## Template functions
+
 #### sum
 
 Blah blah blah.
@@ -42,7 +44,7 @@ to be ordered. Addition must be defined for the type T. The mean is determined
 by the sum of all elements divided by n.
 
 
-### variance
+#### variance
 
 Blah blah blah.
 
@@ -72,6 +74,11 @@ calculated by subtracting (n * mean(A) * mean(B)) from the sum of the cross
 product of all respective elements a.1 and b.1 up to a.n and b.n, all divided
 by (n * standard_deviation(A) * standard_deviation(B)). It should be noted that
 correlation does not imply causality.
+
+
+#### strongest_correlation
+
+Blah blah blah.
 
 
 ### Dependencies
