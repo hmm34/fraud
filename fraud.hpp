@@ -96,7 +96,8 @@ strongest_correlation(double a[], double b[], int n,
 
 // Calculates the sum of a list of numbers, given the first and last iterator
 //
-template<Iterator I, Real T>
+template<typename I, Real T>
+  requires origin::Forward_iterator<I>()
 T sum(I first, I last, T id) {
 	while (first != last) {
 		id = id + *first;
@@ -107,7 +108,8 @@ T sum(I first, I last, T id) {
 
 // Calculates the mean of a list of numbers, given the first and last iterator
 //
-template<Iterator I, Real T>
+template<typename I, Real T>
+  requires origin::Forward_iterator<I>()
 T mean(I first, I last, T id) {
 	T n = id;
 	while (first != last) {
@@ -121,7 +123,8 @@ T mean(I first, I last, T id) {
 // Calculates the variance of a list of numbers, given the first and last
 // iterator
 //
-template<Iterator I, Real T>
+template<typename I, Real T>
+  requires origin::Forward_iterator<I>()
 T variance(I first, I last, T id) {
 	T count = id;
 	T m = mean(first, last, id);
@@ -137,7 +140,8 @@ T variance(I first, I last, T id) {
 // Calculates the standard deviation of a list of numbers, given the first and
 // last iterator
 //
-template<Iterator I, Real T>
+template<typename I, Real T>
+  requires origin::Forward_iterator<I>()
 T standard_deviation(I first, I last, T id) {
 	return sqrt(variance(first, last, id));
 }
@@ -146,7 +150,8 @@ T standard_deviation(I first, I last, T id) {
 // the first and last iterator for each list
 //
 // Precondition: The iterators point to lists of the same size
-template<Iterator I, Real T>
+template<typename I, Real T>
+  requires origin::Forward_iterator<I>()
 T correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id) {
 	T meanA = mean(firstA, lastA, id);
 	T meanB = mean(firstB, lastB, id);
@@ -164,19 +169,7 @@ T correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id) {
 	return id / (count - T(1));
 }
 
-// Calculates the number of elements in a list, provided the first and the last
-// iterator for the list
-//
-// Precondition: last is reachable from first
-template<Real I, typename N>
-  requires Integer<N>()
-N length(I& first, I& last, N zero) {
-	while (first != last) {
-		zero += N(1);
-		++first;
-	}
-	return zero;
-}
+
 
 // Calculate the location of the both longest subsequence in an ordered list of
 // numbers that has the strongest correlation coefficient, meeting the 
@@ -188,7 +181,8 @@ N length(I& first, I& last, N zero) {
 //
 
 /*
-template<Iterator I, Real T, Integer N>
+template<typename I, Real T, Integer N>
+  requires origin::Forward_iterator<I>()
 triple<I, N, T>
 strongest_correlation(I firstA, I lastA, I firstB, I lastB,
 	                  T minR, N minLength, T id) {

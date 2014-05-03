@@ -544,18 +544,7 @@ template<typename T>
 
 // -------------------------------------------------------------------------- //
 // Elements of Programming
-
-
-template<typename T>
-  concept bool 
-  Iterator() {
-    return Regular<T>()
-       and Integer<Distance_type<T>>()
-       and requires (T i) {
-             ++i;
-             *i;
-           };
-}
+  
 
 #endif
 
