@@ -43,22 +43,6 @@ void test_sum_iterators() {
 	double s3 = sum(v1.begin(), v1.end(), 0);
 	if (s3 != 15.0)
 		throw failed;
-
-	
-	// Substitution with double list
-	//std::list<double> l1;
-	// dyld: lazy symbol binding failed: Symbol not found: __ZNSt8__detail15_List_node_base7_M_hookEPS0_
-	// ????????????
-	/*
-	l1.push_back(1.0);
-	l1.push_back(2.0);
-	l1.push_back(3.0);
-	l1.push_back(4.0);
-	l1.push_back(5.0);
-	double s4 = sum(l1.begin(), l1.end(), double_additive_identity);
-	if (s4 != 15.0)
-		throw failed;
-	*/
 }
 
 int main() {

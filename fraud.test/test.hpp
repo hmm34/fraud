@@ -34,8 +34,4 @@ bool inline equalWithEpsilon(double result, double expected) {
 	return false;
 }
 
-double double_additive_identity = 0.0;
-float float_additive_identity = 0.0;
-
-
 #endif
