@@ -5,9 +5,11 @@
 
 #include "concepts.hpp"
 #include "composite.hpp"
+#include "orbit.hpp"
 #include "origin/sequence/concepts.hpp"
 #include <cmath>
-#include <math.h>
+#include <tgmath.h>
+#include <iostream>
 
 // ========================================================================= //
 // =============== Concrete Implementation: Double Array =================== //
@@ -134,14 +136,16 @@ template<typename I, typename T>
 Value_type<I> variance(I first, I last, T id) {
 	typedef Value_type<I> R;
 	R count = R(id);
-	R m = mean(first, last, id);
+	R var   = R(id);
+	R m     = mean(first, last, id);
 	while (first != last) {
-		T diff = *first - m;
-		id += (diff * diff);
+
+		R diff = (*first) - m;
+		var += (diff * diff);
 		++count;
 		++first;
 	}
-	return id / (count - R(1));
+	return var / (count - R(1));
 }
 
 // Calculates the standard deviation of a list of numbers, given the first and
@@ -158,6 +162,7 @@ Value_type<I> standard_deviation(I first, I last, T id) {
 // the first and last iterator for each list
 //
 // Precondition: The iterators point to lists of the same size
+
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
@@ -167,16 +172,15 @@ Value_type<I> correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id
 	R meanB = mean(firstB, lastB, id);
 	R stddevA = standard_deviation(firstA, lastA, id);
 	R stddevB = standard_deviation(firstB, lastB, id);
-	R count = R(id);
+ 	R count = R(id);
+ 	R total = R(id);
 	while (firstA != lastA) {
-		R diffA = (*firstA - meanA) / stddevA;
-		R diffB = (*firstB - meanB) / stddevB;
-		id += (diffA * diffB);
+		total += ((*firstA - meanA) / stddevA) * ((*firstB - meanB) / stddevB);
 		++firstA;
 		++firstB;
 		++count;
 	}
-	return id / (count - R(1));
+	return total / (count - R(1));
 }
 
 
@@ -189,57 +193,72 @@ Value_type<I> correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id
 // Returns a triplet of the starting iterator, the integer length of the
 // sub-sequence, and the corresponding strongest correlation coefficient
 //
-
-/*
-template<typename I, Real T, Integer N>
+template<typename I, typename T, Integer N>
   requires origin::Forward_iterator<I>()
-        && Same<Value_type<I>, T>()
-triple<I, N, T>
+        && Convertible<T, Value_type<I>>()
+        && Convertible<T, N>()
+triple<I, I, Value_type<I>>
 strongest_correlation(I firstA, I lastA, I firstB, I lastB,
-	                  T minR, N minLength, T id) {
-	N maxLength = N(0);
-	T maxR = minR;
+	                  Value_type<I> minR, N minLength, T id) {
+	typedef Value_type<I> R;
+
+	N maxLength = minLength;
+	R maxR      = minR;
 	I startIter = lastA;
-	N len = length(*firstA, *lastA, N(0));
-	N indexI = N(0);
-	
-	I ia = firstA;
-	I ib = firstB;
+	I endIter   = lastA;
 
-	while (ia != lastA && indexI < len - minLength) {
-		I ja = ia;
-		I jb = ib;
-		N indexJ = indexI + minLength;
-
-		while (ja != lastA && indexJ < indexI + minLength) {
-			++ja;
-			++jb;
-			indexJ += N(1);
-		}
-		while (ja != lastA && indexJ < len) {
-			T r = correlation_coefficient(ia, ja, ib, jb, id);
-			if (std::abs(r) > std::abs(maxR)) {
-				maxR = r;
-				startIter = ia;
-				maxLength = indexJ - indexI;
-			}
-			else if (std::abs(r) >= std::abs(maxR) && (indexJ - indexI) > maxLength) {
-				maxR = r;
-				startIter = ia;
-				maxLength = indexJ - indexI;
-			}
-			indexJ += N(1);
-			++ja;
-			++jb;
-		}
-
-		indexI += N(1);
-		++ia;
-		++ib;
+	N len = N(id);
+	I tempFirstA = firstA;
+	while (tempFirstA != lastA) {
+		++tempFirstA;
+		++len;
 	}
-	return triple<I, N, T>(startIter, maxLength, maxR);
+	std::cout << len << "\n";
+
+	I tempFirstB = firstB;
+	tempFirstA   = firstA;
+
+	for (N count1 = N(0); count1 <= len - minLength; ++count1) {
+		
+		for (N count2 = count1 + minLength; count2 <= len; ++count2) {
+			// Increase ending iterators to their appropriate location
+			I tempLastB  = tempFirstB;
+			I tempLastA  = tempFirstA;
+			N dist = count2 - count1;
+			for (N count3 = 0; count3 < dist; ++count3) {
+				++tempLastA;
+				++tempLastB;
+			}
+
+			// Determine correlation coefficient
+			I temp1A = tempFirstA;
+			I temp2A = tempLastA;
+			I temp1B = tempFirstB;
+			I temp2B = tempLastB;
+			R r = correlation_coefficient(temp1A, temp2A, 
+				temp1B, temp2B, id);
+
+			if (std::abs(r) > std::abs(maxR)) {
+				startIter = tempFirstA;
+				endIter   = tempLastA;
+				maxR      = r;
+				maxLength = dist;
+			}
+			else if (std::abs(r) >= std::abs(maxR) &&
+					(dist >= maxLength)) {
+				startIter = tempFirstA;
+				endIter   = tempLastA;
+				maxR      = r;
+				maxLength = dist;
+			}
+		}
+
+		// Increase beginning iterators
+		++tempFirstA;
+		++tempFirstB;
+	}
+	return triple<I, I, R>(startIter, endIter, maxR);
 }
-*/
 
 
 #endif
