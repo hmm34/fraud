@@ -22,13 +22,13 @@ void test_variance_iterator() {
 
 	// Substitution with double array
 	double a[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
-	double v1 = variance(std::begin(a), std::end(a), double_additive_identity);
+	double v1 = variance(std::begin(a), std::end(a), 0);
 	if (v1 != 2.5)
 		throw failed;
 
 	// Substitution with float array
 	float b[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
-	float v2 = variance(std::begin(b), std::end(b), float_additive_identity);
+	float v2 = variance(std::begin(b), std::end(b), 0);
 	if (v2 != 2.5)
 		throw failed;
 
@@ -39,7 +39,7 @@ void test_variance_iterator() {
 	sv1.push_back(3.0);
 	sv1.push_back(4.0);
 	sv1.push_back(5.0);
-	double v3 = variance(sv1.begin(), sv1.end(), double_additive_identity);
+	double v3 = variance(sv1.begin(), sv1.end(), 0);
 	if (v3 != 2.5)
 		throw failed;
 }

@@ -26,7 +26,7 @@ void test_correlation_coefficient_iterator() {
 	                                   std::end(a),
 	                                   std::begin(a), 
 	                                   std::end(a), 
-	                                   double_additive_identity);
+	                                   0);
 	if (!equalWithEpsilon(r1, 1.0))
 		throw failed;
 
@@ -36,7 +36,7 @@ void test_correlation_coefficient_iterator() {
 	                                   std::end(b),
 	                                   std::begin(b), 
 	                                   std::end(b), 
-	                                   float_additive_identity);
+	                                   0);
 	if (!equalWithEpsilon(r2, 1.0))
 		throw failed;
 
@@ -51,7 +51,7 @@ void test_correlation_coefficient_iterator() {
 		                                v1.end(),
 		                                v1.begin(),
 		                                v1.end(),
-		                                double_additive_identity);
+		                                0);
 	if (!equalWithEpsilon(r3, 1.0))
 		throw failed;
 }

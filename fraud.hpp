@@ -96,24 +96,27 @@ strongest_correlation(double a[], double b[], int n,
 
 // Calculates the sum of a list of numbers, given the first and last iterator
 //
-template<typename I, Real T>
+template<typename I, typename T>
   requires origin::Forward_iterator<I>()
-       && Same<Value_type<I>, T>()
-T sum(I first, I last, T id) {
+       && Convertible<T, Value_type<I>>()
+Value_type<I> sum(I first, I last, T id) {
+	typedef Value_type<I> R;
+	R x = R(id);
 	while (first != last) {
-		id = id + *first;
+		x = x + *first;
 		++first;
 	}
-	return id;
+	return x;
 }
 
 // Calculates the mean of a list of numbers, given the first and last iterator
 //
-template<typename I, Real T>
+template<typename I, typename T>
   requires origin::Forward_iterator<I>()
-        && Same<Value_type<I>, T>()
-T mean(I first, I last, T id) {
-	T n = id;
+        && Convertible<T, Value_type<I>>()
+Value_type<I> mean(I first, I last, T id) {
+	typedef Value_type<I> R;
+	R n = R(id);
 	while (first != last) {
 		id = id + *first;
 		++n;
@@ -125,28 +128,29 @@ T mean(I first, I last, T id) {
 // Calculates the variance of a list of numbers, given the first and last
 // iterator
 //
-template<typename I, Real T>
+template<typename I, typename T>
   requires origin::Forward_iterator<I>()
-        && Same<Value_type<I>, T>()
-T variance(I first, I last, T id) {
-	T count = id;
-	T m = mean(first, last, id);
+        && Convertible<T, Value_type<I>>()
+Value_type<I> variance(I first, I last, T id) {
+	typedef Value_type<I> R;
+	R count = R(id);
+	R m = mean(first, last, id);
 	while (first != last) {
 		T diff = *first - m;
 		id += (diff * diff);
 		++count;
 		++first;
 	}
-	return id / (count - T(1));
+	return id / (count - R(1));
 }
 
 // Calculates the standard deviation of a list of numbers, given the first and
 // last iterator
 //
-template<typename I, Real T>
+template<typename I, typename T>
   requires origin::Forward_iterator<I>()
-        && Same<Value_type<I>, T>()
-T standard_deviation(I first, I last, T id) {
+        && Convertible<T, Value_type<I>>()
+Value_type<I> standard_deviation(I first, I last, T id) {
 	return sqrt(variance(first, last, id));
 }
 
@@ -154,24 +158,25 @@ T standard_deviation(I first, I last, T id) {
 // the first and last iterator for each list
 //
 // Precondition: The iterators point to lists of the same size
-template<typename I, Real T>
+template<typename I, typename T>
   requires origin::Forward_iterator<I>()
-        && Same<Value_type<I>, T>()
-T correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id) {
-	T meanA = mean(firstA, lastA, id);
-	T meanB = mean(firstB, lastB, id);
-	T stddevA = standard_deviation(firstA, lastA, id);
-	T stddevB = standard_deviation(firstB, lastB, id);
-	T count = id;
+        && Convertible<T, Value_type<I>>()
+Value_type<I> correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id) {
+	typedef Value_type<I> R;
+	R meanA = mean(firstA, lastA, id);
+	R meanB = mean(firstB, lastB, id);
+	R stddevA = standard_deviation(firstA, lastA, id);
+	R stddevB = standard_deviation(firstB, lastB, id);
+	R count = R(id);
 	while (firstA != lastA) {
-		T diffA = (*firstA - meanA) / stddevA;
-		T diffB = (*firstB - meanB) / stddevB;
+		R diffA = (*firstA - meanA) / stddevA;
+		R diffB = (*firstB - meanB) / stddevB;
 		id += (diffA * diffB);
 		++firstA;
 		++firstB;
 		++count;
 	}
-	return id / (count - T(1));
+	return id / (count - R(1));
 }
 
 

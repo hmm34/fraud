@@ -22,13 +22,13 @@ void test_standard_deviation_iterator() {
 
 	// Substitution with double array
 	double a[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
-	double sd1 = standard_deviation(std::begin(a), std::end(a), double_additive_identity);
+	double sd1 = standard_deviation(std::begin(a), std::end(a), 0);
 	if (!equalWithEpsilon(sd1, 1.58113883008419))
 		throw failed;
 
 	// Substitution with float array
 	float b[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
-	double sd2 = standard_deviation(std::begin(b), std::end(b), float_additive_identity);
+	double sd2 = standard_deviation(std::begin(b), std::end(b), 0);
 	if (!equalWithEpsilon(sd2, 1.58113883008419))
 		throw failed;
 
@@ -39,7 +39,7 @@ void test_standard_deviation_iterator() {
 	v1.push_back(3.0);
 	v1.push_back(4.0);
 	v1.push_back(5.0);
-	double sd3 = standard_deviation(v1.begin(), v1.end(), double_additive_identity);
+	double sd3 = standard_deviation(v1.begin(), v1.end(), 0);
 	if (!equalWithEpsilon(sd3, 1.58113883008419))
 		throw failed;
 }
