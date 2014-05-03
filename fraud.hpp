@@ -5,6 +5,7 @@
 
 #include "concepts.hpp"
 #include "composite.hpp"
+#include "origin/sequence/concepts.hpp"
 #include <cmath>
 #include <math.h>
 

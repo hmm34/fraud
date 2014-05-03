@@ -545,6 +545,7 @@ template<typename T>
 // -------------------------------------------------------------------------- //
 // Elements of Programming
 
+
 template<typename T>
   concept bool 
   Iterator() {
@@ -555,7 +556,6 @@ template<typename T>
              *i;
            };
 }
-
 
 #endif
 

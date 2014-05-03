@@ -44,12 +44,12 @@ void test_sum_iterators() {
 	if (s3 != 15.0)
 		throw failed;
 
-	/*
+	
 	// Substitution with double list
-	std::list<double> l1(5gi);
-	// TODO: WHY THE &*!@ DOES THIS GIVE ME:
+	//std::list<double> l1;
 	// dyld: lazy symbol binding failed: Symbol not found: __ZNSt8__detail15_List_node_base7_M_hookEPS0_
 	// ????????????
+	/*
 	l1.push_back(1.0);
 	l1.push_back(2.0);
 	l1.push_back(3.0);
