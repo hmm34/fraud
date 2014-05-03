@@ -98,6 +98,7 @@ strongest_correlation(double a[], double b[], int n,
 //
 template<typename I, Real T>
   requires origin::Forward_iterator<I>()
+       && Same<Value_type<I>, T>()
 T sum(I first, I last, T id) {
 	while (first != last) {
 		id = id + *first;
@@ -110,6 +111,7 @@ T sum(I first, I last, T id) {
 //
 template<typename I, Real T>
   requires origin::Forward_iterator<I>()
+        && Same<Value_type<I>, T>()
 T mean(I first, I last, T id) {
 	T n = id;
 	while (first != last) {
@@ -125,6 +127,7 @@ T mean(I first, I last, T id) {
 //
 template<typename I, Real T>
   requires origin::Forward_iterator<I>()
+        && Same<Value_type<I>, T>()
 T variance(I first, I last, T id) {
 	T count = id;
 	T m = mean(first, last, id);
@@ -142,6 +145,7 @@ T variance(I first, I last, T id) {
 //
 template<typename I, Real T>
   requires origin::Forward_iterator<I>()
+        && Same<Value_type<I>, T>()
 T standard_deviation(I first, I last, T id) {
 	return sqrt(variance(first, last, id));
 }
@@ -152,6 +156,7 @@ T standard_deviation(I first, I last, T id) {
 // Precondition: The iterators point to lists of the same size
 template<typename I, Real T>
   requires origin::Forward_iterator<I>()
+        && Same<Value_type<I>, T>()
 T correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id) {
 	T meanA = mean(firstA, lastA, id);
 	T meanB = mean(firstB, lastB, id);
@@ -183,6 +188,7 @@ T correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id) {
 /*
 template<typename I, Real T, Integer N>
   requires origin::Forward_iterator<I>()
+        && Same<Value_type<I>, T>()
 triple<I, N, T>
 strongest_correlation(I firstA, I lastA, I firstB, I lastB,
 	                  T minR, N minLength, T id) {
