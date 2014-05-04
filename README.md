@@ -31,41 +31,77 @@ lack of sufficient data.
 
 ## Template functions
 
-#### sum
+#### `sum(I first, I last, T id)`
 
-Blah blah blah.
-
-
-#### mean
-
-Calculates the mean of all n elements in the sequence a. The return type is the
-same type as the elements within the container U. The sequence does not need
-to be ordered. Addition must be defined for the type T. The mean is determined
-by the sum of all elements divided by n.
+Computes the sum of a list of numbers, ranging from [first, last). User must
+provide the additive identity. The returning sum is the same value type as the
+elements to which the iterators point. 
 
 
-#### variance
+##### requirements
 
-Blah blah blah.
+  * `first` and `last` are forward iterators
+  * `T` is convertible to the value type of the iterator
+  * `id` is the additive identity
+  * `last` is reachable from `first`
 
 
-#### standard deviation
+#### `mean(I first, I last, T id)`
 
-Calculates the standard deviation in the sequence a of n elements. The return
-type is the same type as the elements within the container U. The sequence does
-not need to be ordered. Addition, multiplication, and integer division must be
-defined for the type T. Standard deviation is calculated by the square of the
+Calculates the arithmetic mean of a list of numbers, ranging from [first, last). User must
+provide the additive identity. The returning mean is the same value type as the
+elements to which the iterators point. 
+
+
+##### requirements
+
+  * `first` and `last` are forward iterators
+  * `T` is convertible to the value type of the iterator
+  * `id` is the additive identity
+  * `last` is reachable from `first`
+
+
+#### `variance(I first, I last, T id)`
+
+Calculates the variance of a list of numbers, ranging from [first, last). User must
+provide the additive identity. The returning variance is the same value type as the
+elements to which the iterators point. 
+
+
+##### requirements
+
+  * `first` and `last` are forward iterators
+  * `T` is convertible to the value type of the iterator
+  * `id` is the additive identity
+  * `last` is reachable from `first`
+
+
+#### `standard_deviation(I first, I last, T id)`
+
+Calculates the standard deviation in a sequence of elements, ranging from
+[first, last). User must provide the additive identity. The returning standard
+deviation is the same value type as the
+elements to which the iterators point. The sequence does
+not need to be ordered. Standard deviation is calculated by the square of the
 variance. Variance is determined by the sum of the square of the difference
 between the ith element of sequence A and the mean of A, all divided by n - 1.
 
 
-#### correlation_coefficient
+##### requirements
+
+  * `first` and `last` are forward iterators
+  * `T` is convertible to the value type of the iterator
+  * `id` is the additive identity
+  * `last` is reachable from `first`
+  * Addition, multiplication, and division have been defined for iterator value type
+
+
+#### `correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id)`
 
 Calculates the correlation coefficient between the two sequences, a and b. Both
 a and b must be the same type: containers which are each partially ordered and
-hold some numerical values. The third parameter, n, is the number of elements
-in each container. The sequences a and b must be of the same size. The return
-type is a signed floating point number between -1.0 and +1.0. A -1 value
+hold some numerical values. The return
+type is the iterator value type, and is a number between -1.0 and +1.0. A -1 value
 indicates a strong reverse correlation, 0 indicates no correlation, and +1
 indicates a strong positive correlation.
 
@@ -76,9 +112,36 @@ by (n * standard_deviation(A) * standard_deviation(B)). It should be noted that
 correlation does not imply causality.
 
 
-#### strongest_correlation
+##### requirements
 
-Blah blah blah.
+  * `firstA`, `lastA`, `firstB`, and `lastB` are forward iterators
+  * `T` is convertible to the value type of the iterator
+  * `id` is the additive identity
+  * `lastA` is reachable from `firstA`
+  * The ranges [firstA, lastA) and [firstB, lastB) have the same size
+  * Addition, multiplication, and division have been defined for iterator value type
+
+
+#### `strongest_correlation(I firstA, I lastA, I firstB, I lastB, Value_type<I> minR, N minLength, T id)`
+
+Calculates the longest corresponding subsequence of two sequences, a and b, in
+which that subsequence gives the strongest positive or strongest negative correlation
+coefficient for sequence a.sub and b.sub. The minimum threshhold length for the
+subsequence, and the minimum threshhold magnitude for the correlation coefficient are provided.
+The return type is a triple, whose m0 value is the beginning iterator to the
+subsequence, m1 value is the last (non-inclusive) iterator to the subsequence,
+and m2 value is the resulting strongest correlation coefficient for that longest
+subsequence which satisfies the two minimum threshholds.
+
+
+##### requirements
+
+  * `firstA`, `lastA`, `firstB`, and `lastB` are forward iterators
+  * `T` is convertible to the value type of the iterator
+  * `id` is the additive identity
+  * `lastA` is reachable from `firstA`
+  * The ranges [firstA, lastA) and [firstB, lastB) have the same size
+  * Addition, multiplication, and division have been defined for iterator value type
 
 
 ### Dependencies
