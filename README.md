@@ -33,7 +33,8 @@ lack of sufficient data.
 
 #### `sum(I first, I last, T id)`
 
-Computes the sum of a list of numbers, ranging from [first, last). User must
+Computes the <a href="http://en.wikipedia.org/wiki/Summation">summation</a> of a 
+list of numbers, ranging from [first, last). User must
 provide the additive identity. The returning sum is the same value type as the
 elements to which the iterators point. 
 
@@ -48,7 +49,8 @@ elements to which the iterators point.
 
 #### `mean(I first, I last, T id)`
 
-Calculates the arithmetic mean of a list of numbers, ranging from [first, last). User must
+Calculates the <a href="http://en.wikipedia.org/wiki/Arithmetic_mean">arithmetic
+mean</a> of a list of numbers, ranging from [first, last). User must
 provide the additive identity. The returning mean is the same value type as the
 elements to which the iterators point. 
 
@@ -63,7 +65,8 @@ elements to which the iterators point.
 
 #### `variance(I first, I last, T id)`
 
-Calculates the variance of a list of numbers, ranging from [first, last). User must
+Calculates the <a href="http://en.wikipedia.org/wiki/Variance">variance</a>
+of a list of numbers, ranging from [first, last). User must
 provide the additive identity. The returning variance is the same value type as the
 elements to which the iterators point. 
 
@@ -78,7 +81,8 @@ elements to which the iterators point.
 
 #### `standard_deviation(I first, I last, T id)`
 
-Calculates the standard deviation in a sequence of elements, ranging from
+Calculates the <a href="http://en.wikipedia.org/wiki/Standard_deviation">standard
+deviation</a> in a sequence of elements, ranging from
 [first, last). User must provide the additive identity. The returning standard
 deviation is the same value type as the
 elements to which the iterators point. The sequence does
@@ -98,7 +102,8 @@ between the ith element of sequence A and the mean of A, all divided by n - 1.
 
 #### `correlation_coefficient(I firstA, I lastA, I firstB, I lastB, T id)`
 
-Calculates the correlation coefficient between the two sequences, a and b. Both
+Calculates the <a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">
+correlation coefficient</a> between the two sequences, a and b. Both
 a and b must be the same type: containers which are each partially ordered and
 hold some numerical values. The return
 type is the iterator value type, and is a number between -1.0 and +1.0. A -1 value
