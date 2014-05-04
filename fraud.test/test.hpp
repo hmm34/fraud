@@ -29,11 +29,11 @@ template<Function F>
 
 template<Real R, Real T>
 bool inline equalWithEpsilon(R result_r, T expected) {
-	T epsilon = T(0.0000000001);
+  T epsilon = T(0.0000000001);
   T result = T(result_r);
-	if (abs(result - expected) < epsilon)
-		return true;
-	return false;
+  if (abs(result - expected) < epsilon)
+    return true;
+  return false;
 }
 
 #endif
