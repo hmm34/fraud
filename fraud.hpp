@@ -22,15 +22,15 @@ double sum(double a[], int n) {
   return s;
 }
 
-// Calculates the mean of a list of numbers in an array
-double mean(double a[], int n) {
+// Calculates the arithmetic_mean of a list of numbers in an array
+double arithmetic_mean(double a[], int n) {
   double s = sum(a, n);  // O(n)
   return s / (double) n;
 }
 
 // Calculates the variance in a list of numbers in an array in O(2n)
 double variance(double a[], int n) {
-  double m = mean(a, n);         // O(n)
+  double m = arithmetic_mean(a, n);         // O(n)
   double sumSquares = 0;
   for (int i = 0; i < n; ++i) {  // O(n)
     double diff = a[i] - m;
@@ -47,13 +47,13 @@ double standard_deviation(double a[], int n) {
 // Calculates the correlation coefficient for two lists of numbers in an array
 // in O(5n)
 double correlation_coefficient(double a[], double b[], int n) {
-  double meanA = mean(a, n);                  // O(n)
-  double meanB = mean(b, n);                  // O(n)
+  double arithmetic_meanA = arithmetic_mean(a, n);                  // O(n)
+  double arithmetic_meanB = arithmetic_mean(b, n);                  // O(n)
   double stddevA = standard_deviation(a, n);  // O(2n)
   double stddevB = standard_deviation(b, n);  // O(2n)
   double total = 0;
   for (int i = 0; i < n; ++i) {               // O(n)
-    total += ((a[i] - meanA) / stddevA) * ((b[i] - meanB) / stddevB);
+    total += ((a[i] - arithmetic_meanA) / stddevA) * ((b[i] - arithmetic_meanB) / stddevB);
   }
   return total / (double) (n - 1);
 }
@@ -134,7 +134,8 @@ Value_type<I> accumulate(I first, I last, Op op, T id) {
   return x;
 }
 
-// Calculates the mean of a list of numbers, given the first and last iterator
+// Calculates the arithmetic arithmetic_mean of a list of numbers, given the first and 
+// last iterator
 //
 // Preconditions:
 //   * Addition on Value_type<I> has been defined
@@ -146,7 +147,7 @@ template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
         && Regular<Value_type<I>>()
-Value_type<I> mean(I first, I last, T id) {
+Value_type<I> arithmetic_mean(I first, I last, T id) {
   typedef Value_type<I> R;
   R n = R(id);
   while (first != last) {
@@ -155,6 +156,33 @@ Value_type<I> mean(I first, I last, T id) {
     ++first;
   }
   return id / n;
+}
+
+// Calculates the arithmetic_mean of a list of numbers, given the first and last iterator
+//
+// Preconditions:
+//   * Add on Value_type<I> has been defined
+//   * Div on Value_type<I> has been defined
+//   * Add is associative
+//   * id is the Add identity
+//   * last is reachable from first
+//   * Add and Div are related, as they are corresponding operations in the
+//   set of Pythagorean arithmetic_means
+template<typename I, typename T, typename Add, typename Div>
+  requires origin::Forward_iterator<I>()
+        && Convertible<T, Value_type<I>>()
+        && Regular<Value_type<I>>()
+        && Operation<Add, Value_type<I>, Value_type<I>>()
+        && Operation<Div, Value_type<I>, Value_type<I>>()
+Value_type<I> mean(I first, I last, Add add, Div div, T id) {
+  typedef Value_type<I> R;
+  R n = R(id);
+  while (first != last) {
+    id = add(id, *first);
+    ++n;
+    ++first;
+  }
+  return div(id, n);
 }
 
 // Calculates the variance of a list of numbers, given the first and last
@@ -176,7 +204,7 @@ Value_type<I> variance(I first, I last, T id) {
   typedef Value_type<I> R;
   R count = R(id);
   R var = R(id);
-  R m = mean(first, last, id);
+  R m = arithmetic_mean(first, last, id);
   while (first != last) {
     R diff = (*first) - m;
     var += (diff * diff);
@@ -227,14 +255,14 @@ template<typename I, typename T>
 Value_type<I> correlation_coefficient(I firstA, I lastA,
                                       I firstB, I lastB, T id) {
   typedef Value_type<I> R;
-  R meanA = mean(firstA, lastA, id);
-  R meanB = mean(firstB, lastB, id);
+  R arithmetic_meanA = arithmetic_mean(firstA, lastA, id);
+  R arithmetic_meanB = arithmetic_mean(firstB, lastB, id);
   R stddevA = standard_deviation(firstA, lastA, id);
   R stddevB = standard_deviation(firstB, lastB, id);
   R count = R(id);
   R total = R(id);
   while (firstA != lastA) {
-    total += ((*firstA - meanA) / stddevA) * ((*firstB - meanB) / stddevB);
+    total += ((*firstA - arithmetic_meanA) / stddevA) * ((*firstB - arithmetic_meanB) / stddevB);
     ++firstA;
     ++firstB;
     ++count;

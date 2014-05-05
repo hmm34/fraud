@@ -38,5 +38,6 @@ bool inline equalWithEpsilon(R result_r, T expected) {
 
 double inline add(double a, double b) { return a + b; }
 double inline mul(double a, double b) { return a * b; }
+double inline divide(double a, double b) { return a / b; }
 
 #endif
