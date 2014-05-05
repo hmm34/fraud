@@ -93,6 +93,11 @@ strongest_correlation(double a[], double b[], int n,
 
 // Calculates the sum of a list of numbers, given the first and last iterator
 //
+// Preconditions:
+//   * Addition on Value_type<I> has been defined
+//   * Addition is associative
+//   * id is the additive identity
+//   * last is reachable from first
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
        && Convertible<T, Value_type<I>>()
@@ -108,6 +113,12 @@ Value_type<I> sum(I first, I last, T id) {
 
 // Calculates the mean of a list of numbers, given the first and last iterator
 //
+// Preconditions:
+//   * Addition on Value_type<I> has been defined
+//   * Division on Value_type<I> has been defined
+//   * Addition is associative
+//   * id is the associative identity
+//   * last is reachable from first
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
@@ -125,6 +136,14 @@ Value_type<I> mean(I first, I last, T id) {
 // Calculates the variance of a list of numbers, given the first and last
 // iterator
 //
+// Preconditions:
+//   * Subtraction on Value_type<I> has been defined
+//   * Addition on Value_type<I> has been defined
+//   * Multiplication on Value_type<I> has been defined
+//   * Division on Value_type<I> has been defined
+//   * Addition is associative
+//   * id is the additive identity
+//   * last is reachable from first
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
@@ -145,6 +164,15 @@ Value_type<I> variance(I first, I last, T id) {
 // Calculates the standard deviation of a list of numbers, given the first and
 // last iterator
 //
+// Preconditions:
+//   * Subtraction on Value_type<I> has been defined
+//   * Addition on Value_type<I> has been defined
+//   * Multiplication on Value_type<I> has been defined
+//   * Division on Value_type<I> has been defined
+//   * Square root on Value_type<I> has been defined
+//   * Addition is associative
+//   * id is the additive identity
+//   * last is reachable from first
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
@@ -155,8 +183,17 @@ Value_type<I> standard_deviation(I first, I last, T id) {
 // Calculates the correlation coefficient between two lists of numbers, given 
 // the first and last iterator for each list
 //
-// Precondition: The iterators point to lists of the same size
-
+// Preconditions:
+//   * The iterators point to lists of the same size
+//   * Subtraction on Value_type<I> has been defined
+//   * Addition on Value_type<I> has been defined
+//   * Multiplication on Value_type<I> has been defined
+//   * Division on Value_type<I> has been defined
+//   * Square root on Value_type<I> has been defined
+//   * Addition is associative
+//   * id is the additive identity
+//   * lastA is reachable from firstA
+//   * lastB is reachable from firstB
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
@@ -188,6 +225,21 @@ Value_type<I> correlation_coefficient(I firstA, I lastA,
 // Returns a triplet of the starting iterator, the integer length of the
 // sub-sequence, and the corresponding strongest correlation coefficient
 //
+// Preconditions:
+//   * The iterators point to lists of the same size
+//   * Subtraction on Value_type<I> has been defined
+//   * Addition on Value_type<I> has been defined
+//   * Multiplication on Value_type<I> has been defined
+//   * Division on Value_type<I> has been defined
+//   * Square root on Value_type<I> has been defined
+//   * Absolute value on Value_type<I> has been defined
+//   * > and >= on Value_type<I> has been defined
+//   * Addition is associative
+//   * id is the additive identity
+//   * lastA is reachable from firstA
+//   * lastB is reachable from firstB
+//   * -1 <= minR <= 1
+//   * 0 < minLength < length of lists
 template<typename I, typename T, Integer N>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
