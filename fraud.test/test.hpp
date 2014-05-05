@@ -36,4 +36,7 @@ bool inline equalWithEpsilon(R result_r, T expected) {
   return false;
 }
 
+double inline add(double a, double b) { return a + b; }
+double inline mul(double a, double b) { return a * b; }
+
 #endif

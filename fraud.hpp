@@ -89,8 +89,6 @@ strongest_correlation(double a[], double b[], int n,
 // =================== Generic Implementation: Iterators =================== //
 // ========================================================================= //
 
-// TODO: preconditions for ... everything
-
 // Calculates the sum of a list of numbers, given the first and last iterator
 //
 // Preconditions:
@@ -101,11 +99,36 @@ strongest_correlation(double a[], double b[], int n,
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
        && Convertible<T, Value_type<I>>()
+       && Regular<Value_type<I>>()
 Value_type<I> sum(I first, I last, T id) {
   typedef Value_type<I> R;
   R x = R(id);
   while (first != last) {
     x = x + *first;
+    ++first;
+  }
+  return x;
+}
+
+// Accumulates an operation on a series of numbers, given the first and last 
+// iterator, as well as the operation to be performed.
+// Example: Given addition, this calculates the sum
+//
+// Preconditions:
+//   * Op on Value_type<I> has been defined
+//   * Op is associative
+//   * id is the op identity
+//   * last is reachable from first
+template<typename I, typename T, typename Op>
+  requires origin::Forward_iterator<I>()
+       && Convertible<T, Value_type<I>>()
+       && Regular<Value_type<I>>()
+       && Operation<Op, Value_type<I>, Value_type<I>>()
+Value_type<I> accumulate(I first, I last, Op op, T id) {
+  typedef Value_type<I> R;
+  R x = R(id);
+  while (first != last) {
+    x = op(x, *first);
     ++first;
   }
   return x;
@@ -122,6 +145,7 @@ Value_type<I> sum(I first, I last, T id) {
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
+        && Regular<Value_type<I>>()
 Value_type<I> mean(I first, I last, T id) {
   typedef Value_type<I> R;
   R n = R(id);
@@ -147,6 +171,7 @@ Value_type<I> mean(I first, I last, T id) {
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
+        && Regular<Value_type<I>>()
 Value_type<I> variance(I first, I last, T id) {
   typedef Value_type<I> R;
   R count = R(id);
@@ -176,6 +201,7 @@ Value_type<I> variance(I first, I last, T id) {
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
+        && Regular<Value_type<I>>()
 Value_type<I> standard_deviation(I first, I last, T id) {
   return sqrt(variance(first, last, id));
 }
@@ -197,6 +223,7 @@ Value_type<I> standard_deviation(I first, I last, T id) {
 template<typename I, typename T>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
+        && Regular<Value_type<I>>()
 Value_type<I> correlation_coefficient(I firstA, I lastA,
                                       I firstB, I lastB, T id) {
   typedef Value_type<I> R;
@@ -233,7 +260,6 @@ Value_type<I> correlation_coefficient(I firstA, I lastA,
 //   * Division on Value_type<I> has been defined
 //   * Square root on Value_type<I> has been defined
 //   * Absolute value on Value_type<I> has been defined
-//   * > and >= on Value_type<I> has been defined
 //   * Addition is associative
 //   * id is the additive identity
 //   * lastA is reachable from firstA
@@ -244,6 +270,8 @@ template<typename I, typename T, Integer N>
   requires origin::Forward_iterator<I>()
         && Convertible<T, Value_type<I>>()
         && Convertible<T, N>()
+        && Weakly_ordered<Value_type<I>>()
+        && Regular<Value_type<I>>()
 triple<I, I, Value_type<I>>
 strongest_correlation(I firstA, I lastA, I firstB, I lastB,
                     Value_type<I> minR, N minLength, T id) {

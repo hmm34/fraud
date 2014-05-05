@@ -42,6 +42,7 @@ add_unit_test(fraud variance)
 add_unit_test(fraud standard_deviation)
 add_unit_test(fraud correlation_coefficient)
 add_unit_test(fraud strongest_correlation)
+add_unit_test(fraud accumulate)
 
 
 # ---------------------------------------------------------------------------- #
@@ -80,7 +81,11 @@ make_manifest(
   README.md
   fraud.hpp
   fraud.cpp
+  concepts.hpp
+  composite.hpp
+  fraud.test/test.cpp
   fraud.test/sum.cpp
+  fraud.test/accumulate.cpp
   fraud.test/mean.cpp
   fraud.test/variance.cpp
   fraud.test/standard_deviation.cpp
